@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the sb feature feature.
+ */
+
+include_once 'sb_feature.features.inc';
