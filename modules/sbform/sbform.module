@@ -1,0 +1,63 @@
+<?php
+/**
+ * @file
+ * Main module file for SB form
+ */
+
+ /**
+ * Implements hook_help().
+ */
+function sbform_help($path, $arg) {
+
+  if ($path == 'admin/help#sbform') {
+    $output = '<h3>' . t('About') . '</h3>';
+    $output .= '<p>' . t('The sbform module to demonstrate Drupal capacity.') . '</p>';
+    return $output;
+  }
+}
+
+/**
+* Implementation of hook_menu().
+*/
+function sbform_menu() {
+  $items['sbform/creditcard'] = array(
+      'title' => t('Credit Card'),
+      'access arguments' => array('access content'),
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('sbform_creditcard_form'),
+      'access callback' => TRUE,
+  );
+  // $items['sbform/creditcard'] = array(
+  //     'title' => t('Voucher'),
+  //     'page callback' => 'voucher_page',
+  //     'page arguments' => array('sbform_voucher_form'),
+  //     'access callback' => TRUE,
+  // );
+
+  return $items;
+}
+
+function sbform_creditcard_form() {
+    $form = array();
+
+    $form['name']=array(
+        '#type'=>'textfield',
+        '#title'=>t('Name'),
+        //'#description'=>t('')
+      );
+    $form['card']=array(
+        '#type'=>'textfield',
+        '#title'=>t('Card'),
+        //'#description'=>t('')
+      );
+
+     $form['cvv']=array(
+        '#type'=>'textfield',
+        '#title'=>t('CVV'),
+		//'#description'=>t('')
+      );
+
+      return $form;
+}
+
+?>

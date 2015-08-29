@@ -1,0 +1,3 @@
+name = SBForm
+description = Form modules used for SB test
+core = 7.x
