@@ -25,39 +25,100 @@ function sbform_menu() {
       'access arguments' => array('access content'),
       'page callback' => 'drupal_get_form',
       'page arguments' => array('sbform_creditcard_form'),
+      'type' => MENU_CALLBACK,
       'access callback' => TRUE,
   );
-  // $items['sbform/creditcard'] = array(
-  //     'title' => t('Voucher'),
-  //     'page callback' => 'voucher_page',
-  //     'page arguments' => array('sbform_voucher_form'),
-  //     'access callback' => TRUE,
-  // );
+  
+  $items['sbform/voucher'] = array(
+      'title' => t('Voucher'),
+      'access arguments' => array('access content'),
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('sbform_voucher_form'),
+      'access callback' => TRUE,
+  );
 
   return $items;
 }
 
-function sbform_creditcard_form() {
+/**
+* Credit card form's fields declaration.
+*/
+function sbform_creditcard_form($form_state) {
     $form = array();
 
     $form['name']=array(
         '#type'=>'textfield',
         '#title'=>t('Name'),
-        //'#description'=>t('')
+        '#required'=> TRUE,
       );
     $form['card']=array(
         '#type'=>'textfield',
         '#title'=>t('Card'),
-        //'#description'=>t('')
+        '#required'=> TRUE,
+        '#maxlength' => 16,
       );
 
      $form['cvv']=array(
         '#type'=>'textfield',
         '#title'=>t('CVV'),
-		//'#description'=>t('')
+        '#required'=> TRUE,
+        '#maxlength' => 4,
+      );
+
+     $form['submit']=array(
+        '#type'=>'submit',
+        '#value'=>t('Submit'),
       );
 
       return $form;
 }
+/**
+ * Credit card form validation
+*/
+function sbform_creditcard_form_validate($form, &$form_state) {
+}
 
-?>
+/**
+ * Credit card form submit action
+*/
+function sbform_creditcard_form_submit($form, &$form_state) {
+   drupal_set_message("Credit card has been submitted");
+}
+
+
+
+/**
+* Voucher form's fields declaration.
+*/
+function sbform_voucher_form($form_state) {
+    $form = array();
+
+    $form['name']=array(
+        '#type'=>'textfield',
+        '#title'=>t('Name'),
+        '#required'=> TRUE,
+      );
+    $form['card']=array(
+        '#type'=>'textfield',
+        '#title'=>t('Voucher Number'),
+        '#required'=> TRUE,
+      );
+     $form['submit']=array(
+        '#type'=>'submit',
+        '#value'=>t('Submit'),
+      );
+
+      return $form;
+}
+/**
+ * Credit card form validation
+*/
+function sbform_voucher_form_validate($form, &$form_state) {
+}
+
+/**
+ * Credit card form submit action
+*/
+function sbform_voucher_form_submit($form, &$form_state) {
+   drupal_set_message("Voucher has been submitted");
+}
