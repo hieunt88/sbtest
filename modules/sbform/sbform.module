@@ -128,14 +128,8 @@ function sbform_voucher_form_submit($form, &$form_state) {
 */
 function sbform_block_info(){
 	$blocks = array();
-	$blocks ['creditcard_block'] = array(
-		'info' => t('SB Credit card form block'),
-		'status' => TRUE,
-		'visibility' => BLOCK_VISIBILITY_LISTED,
-		);
-
-	$blocks ['voucher_block'] = array(
-		'info' => t('SB Voucher form block'),
+	$blocks ['sbform_block'] = array(
+		'info' => t('SB form block'),
 		'status' => TRUE,
 		'visibility' => BLOCK_VISIBILITY_LISTED,
 		);
@@ -143,23 +137,42 @@ function sbform_block_info(){
 	return $blocks;
 }
 
+/**
+* Block view
+*/
 function sbform_block_view($delta = '') {
-  // The $delta parameter tells us which block is being requested.
   $block = array();
   switch ($delta) {
-    case 'creditcard_block':
-      // Create your block content here
-      $block['subject'] = t('Credit card');
-      $block['content'] = drupal_get_form('sbform_creditcard_form');
-      break;
-    case 'voucher_block':
-      // Create your block content here
-      $block['subject'] = t('Voucher');
-      $block['content'] = drupal_get_form('sbform_voucher_form');
+    case 'sbform_block':
+      $block['content'] = sbform_block_content();
       break;
   }
 
   return $block;
+}
+
+/**
+* SB block content
+*/
+function sbform_block_content(){
+    $ccForm = drupal_get_form('sbform_creditcard_form');
+    $voucherForm = drupal_get_form('sbform_voucher_form');
+
+	$output = '';
+	$output .= '</br>';
+	$output .= '<div class="row">';
+	$output .= '<div class="col-md-6 col-sm-6">';
+	$output .= '<button type="button" class="btn btn-link btn-sb-form btn-sb-form-cc" value="cc">Credit card &gt; &gt; </button>';
+	$output .= '</br>';
+	$output .= '<button type="button" class="btn btn-link btn-sb-form btn-sb-form-voucher" value="voucher">Voucher</button>';
+    $output .= '</div>';
+	$output .= '<div class="col-md-6 col-sm-6">';
+	$output .= '<div class="sb-form sb-form-cc">'.drupal_render($ccForm).'</div>';
+    $output .= '<div class="sb-form sb-form-voucher hidden">'.drupal_render($voucherForm).'</div>';
+    $output .= '</div>';
+    $output .= '</div>';
+
+    return $output;
 }
 
 
